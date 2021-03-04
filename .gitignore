@@ -338,3 +338,15 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Temp/UnityLockfile
+/Temp
+/Assets/Animation
+/Assets/Counter
+/Assets/Easy Primitive People/Materials
+/Assets/Easy Primitive People/Prefab
+/Assets/Imgs
+/Assets/Materials
+/Assets/Sounds
+/Library
+/UIElementsSchema
+/ТЗ UI.docx
