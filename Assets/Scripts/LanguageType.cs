@@ -1,10 +1,10 @@
 ﻿
 public enum LanguageType
 {
-    Eng,
-    Rus,
-    Ukr,
-    Spa,
-    Kaz,
-    Pol
+    eng,
+    rus,
+    ukr,
+    spa,
+    kaz,
+    pol
 }

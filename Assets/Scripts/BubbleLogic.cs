@@ -47,7 +47,6 @@ public class BubbleLogic : MonoBehaviour
         {
             ballRb.transform.position = new Vector3(0, 11f, 0);
         }
-
     }
     private void Player_OnDeath()
     {

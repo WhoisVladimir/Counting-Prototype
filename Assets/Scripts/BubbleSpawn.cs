@@ -22,7 +22,7 @@ public class BubbleSpawn : MonoBehaviour
 
     private void Start()
     {
-        FillBallsQueue();
+        FillBallsList();
         spawnPos = new Vector3(Random.Range(-17f, 17f), 7f, 0f);
         SpawnBall(0);
     }
@@ -51,7 +51,7 @@ public class BubbleSpawn : MonoBehaviour
         countBalls++;
     }
 
-    void FillBallsQueue()
+    void FillBallsList()
     {
         balls = PoolManager.Instance.Prefabs.FindAll(prefab => prefab.CompareTag("Bubble"));
     }

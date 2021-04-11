@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -14,7 +13,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI gameOvText;
     [SerializeField] TextMeshProUGUI finalScoreText;
     [SerializeField] Button restartButton;
+    Hashtable locTab;
     int score = 0;
+    string hp;
+    string sc;
 
     private void Awake()
     {
@@ -34,6 +36,9 @@ public class UIManager : MonoBehaviour
     }
     void Start()
     {
+        locTab = LanguageManager.TextTab;
+        hp = (string)locTab["hp"];
+        sc = (string)locTab["score"]; 
         StartCoroutine(UIInfoUpdate());
     }
 
@@ -45,8 +50,8 @@ public class UIManager : MonoBehaviour
     {
         while (GameManager.Instance.IsGameActive)
         {
-            hpText.text = $"HP: {Player.Instance.Health}";
-            scoreText.text = $"Score: {score}";
+            hpText.text = $"{hp}: {Player.Instance.Health}";
+            scoreText.text = $"{sc}: {score}";
             yield return null;
         }
     }
@@ -54,8 +59,8 @@ public class UIManager : MonoBehaviour
     {
         hpText.text = "";
         scoreText.text = "";
-        gameOvText.text = "Game Over";
-        finalScoreText.text = $"Score: {score}";
+        gameOvText.text = (string)locTab["game ov"];
+        finalScoreText.text = $"{sc}: {score}";
         restartButton.gameObject.SetActive(true);
     }
 }
