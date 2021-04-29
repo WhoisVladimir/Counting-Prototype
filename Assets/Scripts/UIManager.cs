@@ -1,13 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singletone<UIManager>
 {
-    public static UIManager Instance { get; private set; }
-
     [SerializeField] TextMeshProUGUI hpText;
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI gameOvText;
@@ -18,10 +15,10 @@ public class UIManager : MonoBehaviour
     string hp;
     string sc;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (IsInitialized) DestroyImmediate(gameObject);
+        base.Awake();
     }
     private void OnEnable()
     {

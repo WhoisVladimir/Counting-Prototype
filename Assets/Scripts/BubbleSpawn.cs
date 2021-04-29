@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BubbleSpawn : MonoBehaviour
+public class BubbleSpawn : Singletone<BubbleSpawn>
 {
     List<GameObject> balls;
 
     GameObject currentBall;
     Vector3 spawnPos;
-    static BubbleSpawn instance;
-    public static BubbleSpawn Instance => instance;
 
     int countBalls;
     int stage = 1;
 
-    private void Awake()
+    protected override void Awake()
     {
-        instance = this;
+        if (IsInitialized) DestroyImmediate(gameObject);
+        base.Awake();
+
         balls = new List<GameObject>();
     }
 

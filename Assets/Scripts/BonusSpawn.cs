@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BonusSpawn : MonoBehaviour
+public class BonusSpawn : Singletone<BonusSpawn>
 {
-    static BonusSpawn instance;
-    public static BonusSpawn Instance => instance;
     GameObject bonus;
     Vector3 spawnPosition;
 
@@ -17,9 +15,10 @@ public class BonusSpawn : MonoBehaviour
     {
         BubbleLogic.OnHit -= SpawnBonus;
     }
-    private void Awake()
+    protected override void Awake()
     {
-        instance = this;
+        if (IsInitialized) DestroyImmediate(gameObject);
+        base.Awake();
     }
     private void Start()
     {

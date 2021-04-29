@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager : Singletone<PoolManager>
 {
     [SerializeField] List<GameObject> prefabs;
     public List<GameObject> Prefabs => prefabs;
     int prefabCount = 1;
     public Dictionary<string, List<GameObject>> prefabDictionary;
-    static PoolManager instance;
-    public static PoolManager Instance { get { return instance;}}
 
-    private void Awake()
+    protected override void Awake()
     {
-        instance = this;
+        if (IsInitialized) DestroyImmediate(gameObject);
+        base.Awake();
         prefabDictionary = new Dictionary<string, List<GameObject>>();
         prefabDictionary = FillDictionary();
     }

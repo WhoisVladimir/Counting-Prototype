@@ -1,18 +1,15 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FXManager : MonoBehaviour
+public class FXManager : Singletone<FXManager>
 {
-    static FXManager instance;
-    public static FXManager Instance => instance;
-
     GameObject effect;
     Vector3 spawnPosition;
 
-    private void Awake()
+    protected override void Awake()
     {
-        instance = this;
+        if (IsInitialized) DestroyImmediate(gameObject);
+        base.Awake();
     }
 
     private void Start()

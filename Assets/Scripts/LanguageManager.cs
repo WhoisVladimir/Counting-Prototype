@@ -1,25 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
-public class LanguageManager : MonoBehaviour
+public class LanguageManager : Singletone<LanguageManager>
 {
-    public static LanguageManager Instance { get; private set; }
     public static LanguageType CurrentLanguage { get; private set; }
     //public static Dictionary<string, string> TextDic { get; private set; }
     public static Hashtable TextTab { get; private set; }
 
-
-    private void Awake()
+    protected override void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else Destroy(gameObject);
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
         Localize();
     }
 

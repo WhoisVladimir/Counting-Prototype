@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\BubbleLogic.cs" />
     <Compile Include="Assets\Counter\Counter.cs" />
+    <Compile Include="Assets\Scripts\Utils\Singletone.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Localization\Localization.xml.txt" />

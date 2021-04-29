@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singletone<PlayerController>
 {
-    static PlayerController instance;
-    public static PlayerController Instance => instance;
-
     public static event Action OnShot;
     [SerializeField] List<GameObject> bullets;
-    GameObject currentBullet;
+    GameObject currentItem;
     int prefabNumber = 0;
     string bulletName;
     bool isTimeToShot = true;
@@ -18,9 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed;
     float horizontalMove;
 
-    private void Awake()
+    protected override void Awake()
     {
-        instance = this;
+        if (IsInitialized) DestroyImmediate(gameObject);
+        base.Awake();
         playerRb = GetComponent<Rigidbody>();
     }
     private void FixedUpdate()
