@@ -5,7 +5,7 @@ using UnityEngine;
 public class Singletone<T> : MonoBehaviour where T : Singletone<T>
 {
     static T instance;
-    public T Instance => instance;
+    public static T Instance => instance;
     public static bool IsInitialized { get { return instance != null; } }
 
     protected virtual void Awake()

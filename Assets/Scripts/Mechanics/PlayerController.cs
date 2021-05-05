@@ -19,6 +19,7 @@ public class PlayerController : Singletone<PlayerController>
         if (IsInitialized) DestroyImmediate(gameObject);
         base.Awake();
         playerRb = GetComponent<Rigidbody>();
+        currentItem = bullets[prefabNumber];
     }
     private void FixedUpdate()
     {
@@ -42,8 +43,7 @@ public class PlayerController : Singletone<PlayerController>
 
     IEnumerator Fire()
     {
-        bulletName = bullets[prefabNumber].name;
-        GameObject shell = PoolManager.Instance.GetPoolObject(bulletName);
+        GameObject shell = PoolManager.Instance.GetPoolObject(currentItem);
         shell.transform.position = transform.position;
         float tempTimer = shell.GetComponent<BulletLogic>().Timer;
         shell.SetActive(true);

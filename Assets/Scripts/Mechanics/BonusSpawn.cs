@@ -30,7 +30,7 @@ public class BonusSpawn : Singletone<BonusSpawn>
     }
     void SpawnBonus()
     {
-        GameObject obj = PoolManager.Instance.GetPoolObject(bonus.name);
+        GameObject obj = PoolManager.Instance.GetPoolObject(bonus);
         obj.transform.position = spawnPosition;
         obj.SetActive(true);
     }

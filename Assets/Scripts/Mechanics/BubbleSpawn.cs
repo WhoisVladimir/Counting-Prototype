@@ -18,12 +18,13 @@ public class BubbleSpawn : Singletone<BubbleSpawn>
         base.Awake();
 
         balls = new List<GameObject>();
+        spawnPos = new Vector3(Random.Range(-17f, 17f), 7f, 0f);
+
     }
 
     private void Start()
     {
         FillBallsList();
-        spawnPos = new Vector3(Random.Range(-17f, 17f), 7f, 0f);
         SpawnBall(0);
     }
     public void FixSpawnInformation(Vector3 lastPosition, int type)
@@ -45,7 +46,7 @@ public class BubbleSpawn : Singletone<BubbleSpawn>
     void SpawnBall(int type)
     {
         currentBall = balls[type];
-        currentBall = PoolManager.Instance.GetPoolObject(currentBall.name);
+        currentBall = PoolManager.Instance.GetPoolObject(currentBall);
         currentBall.transform.position = spawnPos;
         currentBall.SetActive(true);
         countBalls++;

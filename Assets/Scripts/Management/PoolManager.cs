@@ -6,48 +6,60 @@ public class PoolManager : Singletone<PoolManager>
     [SerializeField] List<GameObject> prefabs;
     public List<GameObject> Prefabs => prefabs;
     int prefabCount = 1;
-    public Dictionary<string, List<GameObject>> prefabDictionary;
+    public Dictionary<GameObject, List<GameObject>> prefabDictionary;
 
     protected override void Awake()
     {
         if (IsInitialized) DestroyImmediate(gameObject);
         base.Awake();
-        prefabDictionary = new Dictionary<string, List<GameObject>>();
-        prefabDictionary = FillDictionary();
+        prefabDictionary = new Dictionary<GameObject, List<GameObject>>();
     }
-    Dictionary<string, List<GameObject>> FillDictionary()
+    void OnEnable()
+    {
+        GameManager.OnSceneReadiness += GameManager_OnSceneReadiness;
+    }
+    void OnDisable()
+    {
+        GameManager.OnSceneReadiness -= GameManager_OnSceneReadiness;
+    }
+    Dictionary<GameObject, List<GameObject>> FillDictionary()
     {
         foreach (var prefab in prefabs)
         {
-            string prefabName = prefab.name;
             List<GameObject> pool = GeneratePool(prefabCount, prefab);
-            prefabDictionary.Add(prefabName, pool);
+            prefabDictionary.Add(prefab, pool);
         }
         return prefabDictionary;
     }
     public List<GameObject> GeneratePool(int amount, GameObject prefab)
     {
-        List<GameObject> bulletPool = new List<GameObject>();
+        List<GameObject> itemPool = new List<GameObject>();
         for (int i = 0; i < amount; i++)
         {
             GameObject obj = Instantiate(prefab);
             obj.SetActive(false);
-            bulletPool.Add(obj);
+            itemPool.Add(obj);
         }
-        return bulletPool;
+        return itemPool;
     }
 
-    public GameObject GetPoolObject(string keyName)
+    public GameObject GetPoolObject(GameObject keyObj)
     {
-        List<GameObject> pool = prefabDictionary[keyName];
+        List<GameObject> pool = prefabDictionary[keyObj];
 
         foreach (var item in pool)
         {
             if (!item.activeInHierarchy) return item;
         }
-        GameObject obj = prefabs.Find(item => item.name.Equals(keyName));
+        GameObject obj = prefabs.Find(item => item.Equals(keyObj));
         obj = Instantiate(obj);
         pool.Add(obj);
         return obj;
     }
+
+    private void GameManager_OnSceneReadiness()
+    {
+       if(GameManager.CurrentGameState == GameState.Game) prefabDictionary = FillDictionary();
+    }
+
 }

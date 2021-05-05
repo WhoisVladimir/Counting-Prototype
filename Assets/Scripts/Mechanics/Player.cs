@@ -3,13 +3,14 @@
 public class Player : Singletone<Player>
 {
     public static event Action OnDeath; 
-    int health = 100;
-    public int Health => health;
+    static int health;
+    public static int Health => health;
     [SerializeField] AudioClip oi_SFX;
     [SerializeField] AudioClip bonus_SFX;
     AudioSource audioSource;
     protected override void Awake()
     {
+        health = 100;
         if (IsInitialized) DestroyImmediate(gameObject);
         base.Awake();
         audioSource = GetComponent<AudioSource>();

@@ -40,7 +40,7 @@ public class FXManager : Singletone<FXManager>
 
     void Explosion()
     {
-        GameObject obj = PoolManager.Instance.GetPoolObject(effect.name);
+        GameObject obj = PoolManager.Instance.GetPoolObject(effect);
         obj.transform.position = spawnPosition;
         obj.SetActive(true);
         obj.GetComponent<AudioSource>().Play();

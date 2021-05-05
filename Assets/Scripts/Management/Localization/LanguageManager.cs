@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class LanguageManager : Singletone<LanguageManager>
 {
+    public static event Action OnLanguageChange;
     public static LanguageType CurrentLanguage { get; private set; }
-    //public static Dictionary<string, string> TextDic { get; private set; }
     public static Hashtable TextTab { get; private set; }
 
     protected override void Awake()
@@ -19,13 +19,15 @@ public class LanguageManager : Singletone<LanguageManager>
     public void LanguageChoose(int value)
     {
         CurrentLanguage = (LanguageType)value;
+        Debug.Log(CurrentLanguage);
         Localize();
+        OnLanguageChange?.Invoke();
     }
 
     void Localize()
     {
         TextTab = new Hashtable();
-        XDocument doc = XDocument.Load(@".\Assets\Scripts\Translation.xml");
+        XDocument doc = XDocument.Load(@".\Assets\Scripts\Management\Localization\Translation.xml");
         var n = from key in doc.Root.Elements("Key")
                 let kn = key
                 from translate in kn.Elements("translate").Elements()
