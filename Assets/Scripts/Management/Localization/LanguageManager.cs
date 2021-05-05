@@ -9,6 +9,7 @@ public class LanguageManager : Singletone<LanguageManager>
     public static LanguageType CurrentLanguage { get; private set; }
     public static Hashtable TextTab { get; private set; }
 
+    [SerializeField] TextAsset xmlFile;
     protected override void Awake()
     {
         base.Awake();
@@ -27,7 +28,7 @@ public class LanguageManager : Singletone<LanguageManager>
     void Localize()
     {
         TextTab = new Hashtable();
-        XDocument doc = XDocument.Load(@".\Assets\Scripts\Management\Localization\Translation.xml");
+        XDocument doc = XDocument.Parse(xmlFile.text);
         var n = from key in doc.Root.Elements("Key")
                 let kn = key
                 from translate in kn.Elements("translate").Elements()
